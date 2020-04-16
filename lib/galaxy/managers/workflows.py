@@ -534,6 +534,7 @@ class WorkflowContentsManager(UsesAnnotations):
                 if step_errors:
                     errors[step.id] = step_errors
         if missing_tools:
+            log.debug("\n* * * * * " + str(missing_tools))
             workflow.annotation = self.get_item_annotation_str(trans.sa_session, trans.user, workflow)
             raise exceptions.MessageException('Following tools missing: %s' % ', '.join(missing_tools))
         workflow.annotation = self.get_item_annotation_str(trans.sa_session, trans.user, workflow)
