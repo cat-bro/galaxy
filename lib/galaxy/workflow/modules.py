@@ -1937,19 +1937,22 @@ class WorkflowModuleInjector(object):
         If step_args is provided from a web form this is applied to generate
         'state' else it is just obtained from the database.
         """
+        print('* * * * step ', step)
+        print('* * * * tool_id ', step.tool_id)
         step_errors = None
         step.upgrade_messages = {}
 
         # Make connection information available on each step by input name.
+        print('* * * * A')
         step.setup_input_connections_by_name()
 
         # Populate module.
         module = step.module = module_factory.from_workflow_step(self.trans, step, **kwargs)
-
+        print('* * * * B')
         # Any connected input needs to have value DummyDataset (these
         # are not persisted so we need to do it every time)
         module.add_dummy_datasets(connections=step.input_connections, steps=steps)
-
+        print('* * * * C')
         # Populate subworkflow components
         if step.type == "subworkflow":
             subworkflow_param_map = step_args or {}
@@ -1959,13 +1962,13 @@ class WorkflowModuleInjector(object):
 
             subworkflow = step.subworkflow
             populate_module_and_state(self.trans, subworkflow, param_map=unjsonified_subworkflow_param_map)
-
+        print('* * * * D')
         state, step_errors = module.compute_runtime_state(self.trans, step, step_args)
         step.state = state
 
         # Fix any missing parameters
         step.upgrade_messages = module.check_and_update_state()
-
+        print('* * * * E')
         return step_errors
 
 
