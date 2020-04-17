@@ -1288,6 +1288,7 @@ class ToolModule(WorkflowModule):
 
     @classmethod
     def from_workflow_step(Class, trans, step, **kwds):
+        print'* * * * * (kwds ', kwds)
         if step.tool_id is not None:
             tool_id = trans.app.toolbox.get_tool_id(step.tool_id) or step.tool_id
         else:
@@ -1947,6 +1948,8 @@ class WorkflowModuleInjector(object):
         """
         print('* * * * step ', step)
         print('* * * * tool_id ', step.tool_id)
+        print('* * * * step_args', step_args)
+        print('* * * * kwargs', kwargs)
         step_errors = None
         step.upgrade_messages = {}
 
