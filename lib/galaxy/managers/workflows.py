@@ -519,6 +519,7 @@ class WorkflowContentsManager(UsesAnnotations):
         errors = {}
         for step in workflow.steps:
             try:
+                print('* * * * trying with exact_tools=False')
                 module_injector.inject(step, steps=workflow.steps, exact_tools=False)
             except exceptions.ToolMissingException as e:
                 # FIXME: if a subworkflow lacks multiple tools we report only the first missing tool
