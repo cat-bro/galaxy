@@ -856,6 +856,7 @@ class WorkflowController(BaseUIController, SharableMixin, UsesStoredWorkflowMixi
         for step in workflow.steps:
             step.upgrade_messages = {}
             # Contruct modules
+            print('* * * * * lib/galaxy/webapps/galaxy/controllers/workflow.py')
             module_injector.inject(step)
             if step.upgrade_messages:
                 has_upgrade_messages = True

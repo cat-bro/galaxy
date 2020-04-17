@@ -303,6 +303,7 @@ class WorkflowProgress(object):
         for step in steps:
             step_id = step.id
             if not hasattr(step, 'module'):
+                print('* * * * * lib/galaxy/workflow/run.py')
                 self.module_injector.inject(step, step_args=self.param_map.get(step.id, {}))
                 if step_id not in step_states:
                     template = "Workflow invocation [%s] has no step state for step id [%s]. States ids are %s."
