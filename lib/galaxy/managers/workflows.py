@@ -518,6 +518,7 @@ class WorkflowContentsManager(UsesAnnotations):
         missing_tools = []
         errors = {}
         for step in workflow.steps:
+            print(dir(step))
             try:
                 print('* * * * trying with exact_tools=False')
                 module_injector.inject(step, steps=workflow.steps, exact_tools=False)
