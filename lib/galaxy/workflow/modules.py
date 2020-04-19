@@ -1990,8 +1990,11 @@ def populate_module_and_state(trans, workflow, param_map, allow_tool_state_corre
     if module_injector is None:
         module_injector = WorkflowModuleInjector(trans, allow_tool_state_corrections)
     for step in workflow.steps:
+        print('step tool id ', step.tool_id)
         step_args = param_map.get(step.id, {})
         print('* * * * * lib/galaxy/workflow/modules.py populate_module_and_state')
+        print('param_map ', param_map)
+        print('step_args ', step_args)
         step_errors = module_injector.inject(step, step_args=step_args)
         if step_errors:
             raise exceptions.MessageException(step_errors, err_data={step.order_index: step_errors})
