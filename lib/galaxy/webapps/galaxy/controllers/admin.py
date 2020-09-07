@@ -1637,7 +1637,8 @@ class AdminGalaxy(controller.JSAppLauncher, AdminActions, UsesQuotaMixin, QuotaP
                                    tool_ids_by_requirements=view.tool_ids_by_requirements,
                                    unused_environments=view.unused_dependency_paths,
                                    viewkey=viewkey)
-
+    
+    @web.legacy_expose_api
     @web.expose
     @web.require_admin
     def sanitize_whitelist(self, trans, submit_whitelist=False, tools_to_whitelist=[]):
