@@ -123,7 +123,7 @@ export default {
         load() {
             this.loading = true;
             this.services
-                .getInstalledRepositories()
+                .getInstalledRepositories({ selectLatest: true })
                 .then((repositories) => {
                     this.repositories = repositories;
                     this.nRepositories = repositories.length;
