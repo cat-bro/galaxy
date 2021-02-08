@@ -118,7 +118,9 @@ class ToolsController(BaseAPIController, UsesVisualizationMixin):
                 log.error('you cannot do that')
             log.debug('finally happens no matter what')
         log.debug('\n-------------------------------------------------------------------------\n\n\n')
-        return tool.to_dict(trans, io_details=io_details, link_details=link_details)
+        abc = tool.to_dict(trans, io_details=io_details, link_details=link_details)
+        abc['hello'] = 'HELLO CAT HERE IS A MESSAGE TO SHOW THAT IT WORKED'
+        return abc
 
     @expose_api_anonymous
     def build(self, trans, id, **kwd):
