@@ -108,6 +108,16 @@ class ToolsController(BaseAPIController, UsesVisualizationMixin):
         link_details = util.string_as_bool(kwd.get('link_details', False))
         tool_version = kwd.get('tool_version')
         tool = self._get_tool(id, user=trans.user, tool_version=tool_version)
+        log.debug('\n\n\n-------------------xyxyxyxyxyxy-----------------------------------\n')
+        try:
+            a = 'carrot' + 4
+        finally:
+            try:
+                a = 'swede' - 5
+            except Exception as e:
+                log.error('you cannot do that')
+            log.debug('finally happens no matter what')
+        log.debug('\n-------------------------------------------------------------------------\n\n\n')
         return tool.to_dict(trans, io_details=io_details, link_details=link_details)
 
     @expose_api_anonymous
