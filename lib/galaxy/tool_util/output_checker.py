@@ -26,6 +26,8 @@ def check_output_regex(job_id_tag, regex, stream, stream_name, job_messages, max
     max_error_level the maximum error level that has been detected so far
     returns the max of the error_level of the regex and the given max_error_level
     """
+    log.debug('\n\ncheck_output_regex\n')
+    log.debug('stream: ' + stream + '\n\n')
     regex_match = re.search(regex.match, stream, re.IGNORECASE)
     if regex_match:
         reason = __regex_err_msg(regex_match, stream_name, regex)
@@ -46,6 +48,7 @@ def check_output(stdio_regexes, stdio_exit_codes, stdout, stderr, tool_exit_code
     any stdio/stderr handling, then it reverts back to previous behavior:
     if stderr contains anything, then False is returned.
     """
+    log.debug('stdio_regexes: ' + stdio_regexes)
     # By default, the tool succeeded. This covers the case where the code
     # has a bug but the tool was ok, and it lets a workflow continue.
     state = DETECTED_JOB_STATE.OK
