@@ -48,7 +48,7 @@ def check_output(stdio_regexes, stdio_exit_codes, stdout, stderr, tool_exit_code
     any stdio/stderr handling, then it reverts back to previous behavior:
     if stderr contains anything, then False is returned.
     """
-    log.debug('stdio_regexes: ' + stdio_regexes)
+    log.debug('stdio_regexes: ', stdio_regexes)
     # By default, the tool succeeded. This covers the case where the code
     # has a bug but the tool was ok, and it lets a workflow continue.
     state = DETECTED_JOB_STATE.OK
