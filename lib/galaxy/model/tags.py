@@ -219,7 +219,8 @@ class TagHandler:
         """Create a Tag object from a tag string."""
         tag_hierarchy = [self._scrub_tag_name(sub_tag) for sub_tag in tag_str.split(self.hierarchy_separator)]
         if None in tag_hierarchy:
-            return None
+            raise Exception('Invalid tag name: Come up with a good error message')
+            # return None
         tag_prefix = ""
         parent_tag = None
         for scrubbed_sub_tag in tag_hierarchy:
