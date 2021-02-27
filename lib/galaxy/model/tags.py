@@ -217,12 +217,19 @@ class TagHandler:
 
     def _create_tag(self, tag_str):
         """Create a Tag object from a tag string."""
-        tag_hierarchy = tag_str.split(self.hierarchy_separator)
+        tag_hierarchy = [self._scrub_tag_name(sub_tag) for sub_tag in tag_str.split(self.hierarchy_separator)]
+        if None in tag_hierarchy:
+            return None
         tag_prefix = ""
         parent_tag = None
-        for sub_tag in tag_hierarchy:
+        for scrubbed_sub_tag in tag_hierarchy:
             # Get or create subtag.
-            tag_name = tag_prefix + self._scrub_tag_name(sub_tag)
+            # scrubbed_tag_name = self._scrub_tag_name(sub_tag)
+            # if not scrubbed_tag_name:
+            #     return None
+            # tag_name = tag_prefix + scrubbed_tag_name
+            # tag_name = tag_prefix + self._scrub_tag_name(sub_tag)
+            tag_name = tag_prefix + scrubbed_sub_tag
             tag = self._get_tag(tag_name)
             if not tag:
                 tag = self._create_tag_instance(tag_name)
@@ -231,8 +238,8 @@ class TagHandler:
             # Update parent and tag prefix.
             parent_tag = tag
             tag_prefix = tag.name + self.hierarchy_separator
-        if tag is None:
-            raise Exception('Invalid tag name: Come up with a good error message')
+        # if tag is None:
+        #     raise Exception('Invalid tag name: Come up with a good error message')
         return tag
 
     def _get_tag(self, tag_name):
