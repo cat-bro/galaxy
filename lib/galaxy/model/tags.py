@@ -12,7 +12,6 @@ from galaxy.util import (
 
 log = logging.getLogger(__name__)
 
-
 # Item-specific information needed to perform tagging.
 class ItemTagAssocInfo:
     def __init__(self, item_class, tag_assoc_class, item_id_col):
@@ -232,6 +231,8 @@ class TagHandler:
             # Update parent and tag prefix.
             parent_tag = tag
             tag_prefix = tag.name + self.hierarchy_separator
+        if tag is None:
+            raise Exception('Invalid tag name: Come up with a good error message')
         return tag
 
     def _get_tag(self, tag_name):
