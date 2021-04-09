@@ -212,7 +212,13 @@ class ToolsController(BaseAPIController, UsesVisualizationMixin):
         """
         if 'payload' in kwd:
             kwd = kwd.get('payload')
+        log.debug('\n-----------------------------------------------------------------------------\n')
+        log.debug('payload')
+        log.debug(payload)
+        log.debug('\n-----------------------------------------------------------------------------\n')
         tool_version = kwd.get('tool_version', None)
+        log.debug('tool_version')
+        log.debug(tool_version)
         if tool_version == "*":
             tools = self.app.toolbox.get_tool(id, get_all_versions=True)
             for tool in tools:
