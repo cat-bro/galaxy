@@ -215,7 +215,7 @@ class ToolsController(BaseAPIController, UsesVisualizationMixin):
 
         log.debug('\n-----------------------------------------------------------------------------\n')
         log.debug('payload')
-        log.debug(payload)
+        log.debug(kwd)
         log.debug('\n-----------------------------------------------------------------------------\n')
         tool_version = kwd.get('tool_version', None)
         log.debug('tool_version')
