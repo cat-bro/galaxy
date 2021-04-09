@@ -213,6 +213,7 @@ class ToolsController(BaseAPIController, UsesVisualizationMixin):
         if 'payload' in kwd:
             kwd = kwd.get('payload')
 
+
         log.debug('\n-----------------------------------------------------------------------------\n')
         log.debug('payload')
         log.debug(payload)
