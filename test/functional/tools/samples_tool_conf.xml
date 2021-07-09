@@ -105,6 +105,7 @@
   <tool file="output_auto_format.xml" />
   <tool file="create_2.xml" />
   <tool file="create_10.xml" />
+  <tool file="create_1_expect_2.xml" />
   <tool file="disambiguate_repeats.xml" />
   <tool file="min_repeat.xml" />
   <tool file="parallelism.xml" />
