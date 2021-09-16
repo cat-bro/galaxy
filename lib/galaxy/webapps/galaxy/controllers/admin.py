@@ -95,9 +95,9 @@ class UserListGrid(grids.Grid):
             if column is None:
                 column = getattr(self.model_class, column_name)
             if ascending:
-                query = query.order_by(column.asc()).suffix_with('NULLS FIRST')
+                query = query.order_by(column.asc().nullsfirst())
             else:
-                query = query.order_by(column.desc()).suffix_with('NULLS LAST')
+                query = query.order_by(column.desc().nullslast())
             print('\n----------\n')
             print(query)
             return query
