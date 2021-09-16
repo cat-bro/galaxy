@@ -496,6 +496,13 @@ def populate_api_routes(webapp, app):
         action="tool_lineages"
     )
     webapp.mapper.connect(
+        'sanitize_allowlist',
+        '/api/configuration/sanitize_allowlist',
+        controller="configuration",
+        action="sanitize_allowlist",
+        conditions=dict(method=["GET"])
+    )
+    webapp.mapper.connect(
         '/api/configuration/toolbox',
         controller="configuration",
         action="reload_toolbox",

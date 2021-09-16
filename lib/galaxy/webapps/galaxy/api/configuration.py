@@ -131,8 +131,8 @@ class FastAPIConfiguration:
         summary="Return list of allowlisted tools",
         response_description="Allowlist"
     )
-    def sanitize_allowlist(self) -> List[Dict[str, Dict]]:
-        """Return tool lineages for tools that have them."""
+    def sanitize_allowlist(self) -> List[str]:
+        """Return tool allowlist."""
         return self.configuration_manager.get_sanitize_allowlist()
 
     @router.put(
