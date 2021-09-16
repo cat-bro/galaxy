@@ -125,6 +125,16 @@ class FastAPIConfiguration:
         """Return tool lineages for tools that have them."""
         return self.configuration_manager.tool_lineages()
 
+    @router.get(
+        '/api/configuration/sanitize_allowlist',
+        require_admin=True,
+        summary="Return list of allowlisted tools",
+        response_description="Allowlist"
+    )
+    def tool_lineages(self) -> List[Dict[str, Dict]]:
+        """Return tool lineages for tools that have them."""
+        return self.configuration_manager.get_sanitize_allowlist()
+
     @router.put(
         '/api/configuration/toolbox',
         require_admin=True,
@@ -203,6 +213,11 @@ class ConfigurationController(BaseGalaxyAPIController):
         """Return an object containing exposable configuration settings."""
         view, keys = kwd.get('view'), kwd.get('keys')
         return _index(self.configuration_manager, trans, view, keys)
+
+    @require_admin
+    @expose_api
+    def get_sanitize_allowlist(self, trans, **kwds):
+        return trans.app.config.sanitize_allowlist
 
 
 def _user_to_model(user, security):
