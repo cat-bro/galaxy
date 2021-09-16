@@ -103,6 +103,7 @@ class UserListGrid(grids.Grid):
                 query = query.order_by(column.asc())
             else:
                 query = query.order_by(column.desc())
+            print(query)
             return query
 
 
