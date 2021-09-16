@@ -97,12 +97,13 @@ class UserListGrid(grids.Grid):
                 column_name = self.key
             column = self.model_class.table.c.get(column_name)
             print(column)
-            if column is None:
-                column = getattr(self.model_class, column_name)
-            if ascending:
-                query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) ASC')
-            else:
-                query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) DESC')
+            # if column is None:
+            #     column = getattr(self.model_class, column_name)
+            # if ascending:
+            #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) ASC')
+            # else:
+            #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) DESC')
+            print(query.__class__)
             print(query)
             print(dir(query))
             return query
