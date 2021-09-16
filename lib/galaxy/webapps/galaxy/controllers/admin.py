@@ -100,9 +100,9 @@ class UserListGrid(grids.Grid):
             if column is None:
                 column = getattr(self.model_class, column_name)
             if ascending:
-                query = query.order_by('COALESCE(galaxy_user.disk_usage ASC')
+                query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) ASC')
             else:
-                query = query.order_by('COALESCE(galaxy_user.disk_usage DESC')
+                query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) DESC')
             print(query)
             print(dir(query))
             return query
