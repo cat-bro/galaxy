@@ -87,6 +87,24 @@ class UserListGrid(grids.Grid):
     class DiskUsageColumn(grids.GridColumn):
         def get_value(self, trans, grid, user):
             return user.get_disk_usage(nice_size=True)
+        
+        def sort(self, trans, query, ascending, column_name=None):
+            print('\n-----------------------------\n')
+            print(trans)
+            print(query)
+            print(ascending)
+            if column_name is None:
+                column_name = self.key
+            column = self.model_class.table.c.get(column_name)
+            print(column)
+            if column is None:
+                column = getattr(self.model_class, column_name)
+            if ascending:
+                query = query.order_by(column.asc())
+            else:
+                query = query.order_by(column.desc())
+            return query
+
 
     # Grid definition
     title = "Users"
