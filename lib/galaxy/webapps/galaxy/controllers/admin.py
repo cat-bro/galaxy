@@ -89,24 +89,36 @@ class UserListGrid(grids.Grid):
             return user.get_disk_usage(nice_size=True)
         
         def sort(self, trans, query, ascending, column_name=None):
-            print('\n-----------------------------\n')
-            print(trans)
-            print(query)
-            print(ascending)
             if column_name is None:
                 column_name = self.key
             column = self.model_class.table.c.get(column_name)
-            print(column)
-            # if column is None:
-            #     column = getattr(self.model_class, column_name)
-            # if ascending:
-            #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) ASC')
-            # else:
-            #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) DESC')
-            print(query.__class__)
+            if column is None:
+                column = getattr(self.model_class, column_name)
+            if ascending:
+                query = query.order_by(column.asc()).suffix_with('NULLS FIRST')
+            else:
+                query = query.order_by(column.desc()).suffix_with('NULLS LAST')
+            print('\n----------\n')
             print(query)
-            print(dir(query))
             return query
+            # print('\n-----------------------------\n')
+            # print(trans)
+            # print(query)
+            # print(ascending)
+            # if column_name is None:
+            #     column_name = self.key
+            # column = self.model_class.table.c.get(column_name)
+            # print(column)
+            # # if column is None:
+            # #     column = getattr(self.model_class, column_name)
+            # # if ascending:
+            # #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) ASC')
+            # # else:
+            # #     query = query.order_by('COALESCE(galaxy_user.disk_usage, 0) DESC')
+            # print(query.__class__)
+            # print(query)
+            # print(dir(query))
+            # return query
 
 
     # Grid definition
