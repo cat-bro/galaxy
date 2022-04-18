@@ -131,6 +131,8 @@ class ToolPanelViewSearch:
         with AsyncWriter(self.index) as writer:
             for tool_id in tool_ids_to_remove:
                 writer.delete_by_term('id', tool_id)
+            log.debug(f'##### Tools to add to index')
+            log.debug(f'{tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
                 tool = self.toolbox.get_tool(tool_id)
                 if tool and tool.is_latest_version and self.toolbox.panel_has_tool(tool, self.panel_view_id):
@@ -146,8 +148,11 @@ class ToolPanelViewSearch:
                                 continue
                         else:
                             continue
+                    log.debug(f'##### triggering create_doc for tool id {tool_id}')
                     add_doc_kwds = self._create_doc(tool_id=tool_id, tool=tool, index_help=index_help)
                     writer.update_document(**add_doc_kwds)
+                else:
+                    log.debug(f'##### NOT triggering create_doc for tool id {tool_id}')
         log.debug(f"Toolbox index of panel {self.panel_view_id} finished {execution_timer}")
 
     def _create_doc(self, tool_id: str, tool, index_help: bool = True) -> Dict[str, str]:
