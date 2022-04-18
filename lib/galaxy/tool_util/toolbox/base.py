@@ -951,6 +951,7 @@ class AbstractToolBox(Dictifiable, ManagesIntegratedToolPanelMixin):
                 else:
                     raise
             if tool.tool_shed_repository or not guid:
+                log.debug(f"##### triggering add tool to cache for tool id {tool.id}")
                 self.add_tool_to_cache(tool, config_file)
             self.watch_tool(tool)
         return tool

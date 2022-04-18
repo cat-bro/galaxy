@@ -241,12 +241,12 @@ def reload_tool_data_tables(app, **kwargs):
 def rebuild_toolbox_search_index(app, **kwargs):
     if app.is_webapp:
         if app.toolbox_search.index_count < app.toolbox._reload_count:
-            log.debug("--+-- YES reindex toolbox search")
-            log.debug(f"--+-- app.toolbox_search.index_count {app.toolbox_search.index_count} IS LESS THAN app.toolbox._reload_count {app.toolbox._reload_count}")
+            log.debug("##### YES reindex toolbox search")
+            log.debug(f"##### app.toolbox_search.index_count {app.toolbox_search.index_count} IS LESS THAN app.toolbox._reload_count {app.toolbox._reload_count}")
             app.reindex_tool_search()
         else:
-            log.debug("--+-- Not rebuiling tool search index because condition is not met")
-            log.debug(f"--+-- app.toolbox_search.index_count {app.toolbox_search.index_count} is not less than app.toolbox._reload_count {app.toolbox._reload_count}")
+            log.debug("##### Not rebuiling tool search index because condition is not met")
+            log.debug(f"##### app.toolbox_search.index_count {app.toolbox_search.index_count} is not less than app.toolbox._reload_count {app.toolbox._reload_count}")
     else:
         log.debug("App is not a webapp, not building a search index")
 
