@@ -127,6 +127,7 @@ class ToolPanelViewSearch:
                 latest_version = indexed_tool.latest_version
                 if latest_version and latest_version.hidden:
                     continue
+            log.debug(f"##### Adding {indexed_tool_id} to tool_ids to remove")
             tool_ids_to_remove.add(indexed_tool_id)
         with AsyncWriter(self.index) as writer:
             for tool_id in tool_ids_to_remove:
