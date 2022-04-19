@@ -136,7 +136,10 @@ class ToolPanelViewSearch:
             log.debug(f'{tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
                 tool = self.toolbox.get_tool(tool_id)
-                if tool and tool.is_latest_version and self.toolbox.panel_has_tool(tool, self.panel_view_id):
+                panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
+                print(f"##### self.toolbox.get_tool(tool_id): {str(tool)}")
+                print(f"##### panel_has_tool: {panel_has_tool}")
+                if tool and tool.is_latest_version and panel_has_tool:
                     if tool.hidden:
                         # we check if there is an older tool we can return
                         if tool.lineage:
