@@ -39,6 +39,10 @@ CanConvertToFloat = Union[str, int, float]
 CanConvertToInt = Union[str, int, float]
 
 
+def get_tool_version_from_id(tool_id):
+    if '/' in tool_id:
+        return tool_id.split('/')[-1]
+
 def get_or_create_index(index_dir: str, schema: Schema) -> index.Index:
     if not os.path.exists(index_dir):
         os.makedirs(index_dir)
@@ -135,7 +139,8 @@ class ToolPanelViewSearch:
             log.debug(f'##### Tools to add to index')
             log.debug(f'{tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
-                tool = self.toolbox.get_tool(tool_id, exact=True)
+                tool = self.toolbox.get_tool(tool_id, tool_version=get_tool_version_from_id(tool_id))
+                # tool = self.toolbox.get_tool(tool_id, exact=True)
                 panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
                 log.debug(f"##### self.toolbox.get_tool(tool_id): {str(tool)} {tool_id}")
                 log.debug(f"##### panel_has_tool: {panel_has_tool}")
