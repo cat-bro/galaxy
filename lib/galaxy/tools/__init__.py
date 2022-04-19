@@ -686,6 +686,7 @@ class Tool(Dictifiable):
     @property
     def is_latest_version(self):
         tool_versions = self.tool_versions
+        log.debug(f"version: {self.version}, tool versions: {self.tool_versions}")
         return not tool_versions or self.version == self.tool_versions[-1]
 
     @property
