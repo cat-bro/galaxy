@@ -139,12 +139,13 @@ class ToolPanelViewSearch:
             log.debug(f'##### Tools to add to index')
             log.debug(f'{tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
-                tool = self.toolbox.get_tool(tool_id, tool_version=get_tool_version_from_id(tool_id))
+                tool = self.toolbox.get_tool(tool_id)
+                # tool = self.toolbox.get_tool(tool_id, tool_version=get_tool_version_from_id(tool_id))
                 # tool = self.toolbox.get_tool(tool_id, exact=True)
                 panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
-                log.debug(f"##### self.toolbox.get_tool(tool_id): {str(tool)} {tool_id}")
-                log.debug(f"##### panel_has_tool: {panel_has_tool}")
-                log.debug(f"##### tool is latest version: {tool.is_latest_version if tool else 'tool is None'}")
+                log.debug(f"##### self.toolbox.get_tool(tool_id): {str(tool)} {tool_id} version {str(tool.version) if tool else 'tool is none'}")
+                # log.debug(f"##### panel_has_tool: {panel_has_tool}")
+                # log.debug(f"##### tool is latest version: {tool.is_latest_version if tool else 'tool is None'}")
                 if tool and tool.is_latest_version and panel_has_tool:
                     if tool.hidden:
                         # we check if there is an older tool we can return
