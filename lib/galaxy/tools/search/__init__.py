@@ -139,7 +139,7 @@ class ToolPanelViewSearch:
                 panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
                 log.debug(f"##### self.toolbox.get_tool(tool_id): {str(tool)} {tool_id}")
                 log.debug(f"##### panel_has_tool: {panel_has_tool}")
-                log.debug(f"##### tool is latest version: {tool.is_latest_version}")
+                log.debug(f"##### tool is latest version: {tool.is_latest_version if tool else 'tool is None'}")
                 if tool and tool.is_latest_version and panel_has_tool:
                     if tool.hidden:
                         # we check if there is an older tool we can return
