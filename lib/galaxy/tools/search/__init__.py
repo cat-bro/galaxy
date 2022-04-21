@@ -108,7 +108,7 @@ class ToolPanelViewSearch:
         self.toolbox = toolbox
         self.panel_view_id = panel_view_id
         self.index = self._index_setup()
-        log.debug(f"##### Initialising ToolPanelViewSearch with name {self.name} ")
+        log.debug(f"##### Initialising ToolPanelViewSearch with id {self.panel_view_id} ")
 
     def _index_setup(self) -> index.Index:
         return get_or_create_index(index_dir=self.index_dir, schema=self.schema)
