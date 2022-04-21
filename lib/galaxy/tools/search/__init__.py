@@ -136,7 +136,10 @@ class ToolPanelViewSearch:
                 writer.delete_by_term('id', tool_id)
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
                 tool = toolbox.get_tool(tool_id)
+                panel_has_tool = toolbox.panel_has_tool(tool, self.panel_view_id)
+                log.debug(f"##### tool: {tool}, tool.id: {tool.id}, panel_has_tool: {panel_has_tool}")
                 if tool and tool.is_latest_version and toolbox.panel_has_tool(tool, self.panel_view_id):
+                    log.debug('##### will trigger create_doc')
                     if tool.hidden:
                         # we check if there is an older tool we can return
                         if tool.lineage:
