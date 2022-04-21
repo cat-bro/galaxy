@@ -67,7 +67,7 @@ class ToolBoxSearch:
         for panel_view in toolbox.panel_views():
             panel_view_id = panel_view.id
             panel_index_dir = os.path.join(index_dir, panel_view_id)
-            panel_searches[panel_view_id] = ToolPanelViewSearch(toolbox, panel_view_id, panel_index_dir, index_help=index_help)
+            panel_searches[panel_view_id] = ToolPanelViewSearch(panel_view_id, panel_index_dir, index_help=index_help)
         self.panel_searches = panel_searches
         # We keep track of how many times the tool index has been rebuilt.
         # We start at -1, so that after the first index the count is at 0,
@@ -94,7 +94,7 @@ class ToolPanelViewSearch:
     the Whoosh search library.
     """
 
-    def __init__(self, toolbox, panel_view_id: str, index_dir: str, index_help: bool = True):
+    def __init__(self, panel_view_id: str, index_dir: str, index_help: bool = True):
         self.schema = Schema(id=ID(stored=True, unique=True),
                              old_id=ID,
                              stub=KEYWORD,
@@ -105,11 +105,9 @@ class ToolPanelViewSearch:
                              labels=KEYWORD)
         self.rex = analysis.RegexTokenizer()
         self.index_dir = index_dir
-        self.toolbox = toolbox
         self.panel_view_id = panel_view_id
         self.index = self._index_setup()
-        log.debug(f"##### Initialising ToolPanelViewSearch with id {self.panel_view_id} ")
-
+    
     def _index_setup(self) -> index.Index:
         return get_or_create_index(index_dir=self.index_dir, schema=self.schema)
 
@@ -132,22 +130,13 @@ class ToolPanelViewSearch:
                 latest_version = indexed_tool.latest_version
                 if latest_version and latest_version.hidden:
                     continue
-            log.debug(f"##### Adding {indexed_tool_id} to tool_ids to remove")
             tool_ids_to_remove.add(indexed_tool_id)
         with AsyncWriter(self.index) as writer:
             for tool_id in tool_ids_to_remove:
                 writer.delete_by_term('id', tool_id)
-            log.debug(f'##### Tools to add to index')
-            log.debug(f'##### {tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
                 tool = toolbox.get_tool(tool_id)
-                # tool = self.toolbox.get_tool(tool_id, tool_version=get_tool_version_from_id(tool_id))
-                # tool = self.toolbox.get_tool(tool_id, exact=True)
-                panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
-                log.debug(f"##### self.toolbox.get_tool(tool_id): {str(tool)} {tool_id} version {str(tool.version) if tool else 'tool is none'}")
-                # log.debug(f"##### panel_has_tool: {panel_has_tool}")
-                # log.debug(f"##### tool is latest version: {tool.is_latest_version if tool else 'tool is None'}")
-                if tool and tool.is_latest_version and panel_has_tool:
+                if tool and tool.is_latest_version and toolbox.panel_has_tool(tool, self.panel_view_id):
                     if tool.hidden:
                         # we check if there is an older tool we can return
                         if tool.lineage:
@@ -160,7 +149,6 @@ class ToolPanelViewSearch:
                                 continue
                         else:
                             continue
-                    log.debug(f'##### triggering create_doc for tool id {tool_id}')
                     add_doc_kwds = self._create_doc(tool_id=tool_id, tool=tool, index_help=index_help)
                     writer.update_document(**add_doc_kwds)
                 else:
