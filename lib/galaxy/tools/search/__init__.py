@@ -75,10 +75,10 @@ class ToolBoxSearch:
         # reindexing if the index count is equal to the toolbox reload count.
         self.index_count = -1
 
-    def build_index(self, tool_cache, index_help: bool = True) -> None:
+    def build_index(self, tool_cache, toolbox, index_help: bool = True) -> None:
         self.index_count += 1
         for panel_search in self.panel_searches.values():
-            panel_search.build_index(tool_cache, index_help=index_help)
+            panel_search.build_index(tool_cache, toolbox, index_help=index_help)
 
     def search(self, *args, **kwd) -> List[str]:
         panel_view = kwd.pop("panel_view")
@@ -108,11 +108,12 @@ class ToolPanelViewSearch:
         self.toolbox = toolbox
         self.panel_view_id = panel_view_id
         self.index = self._index_setup()
+        log.debug(f"##### Initialising ToolPanelViewSearch with name {self.name} ")
 
     def _index_setup(self) -> index.Index:
         return get_or_create_index(index_dir=self.index_dir, schema=self.schema)
 
-    def build_index(self, tool_cache, index_help: bool = True) -> None:
+    def build_index(self, tool_cache, toolbox, index_help: bool = True) -> None:
         """
         Prepare search index for tools loaded in toolbox.
         Use `tool_cache` to determine which tools need indexing and which tools should be expired.
@@ -137,9 +138,9 @@ class ToolPanelViewSearch:
             for tool_id in tool_ids_to_remove:
                 writer.delete_by_term('id', tool_id)
             log.debug(f'##### Tools to add to index')
-            log.debug(f'{tool_cache._new_tool_ids - indexed_tool_ids}')
+            log.debug(f'##### {tool_cache._new_tool_ids - indexed_tool_ids}')
             for tool_id in tool_cache._new_tool_ids - indexed_tool_ids:
-                tool = self.toolbox.get_tool(tool_id)
+                tool = toolbox.get_tool(tool_id)
                 # tool = self.toolbox.get_tool(tool_id, tool_version=get_tool_version_from_id(tool_id))
                 # tool = self.toolbox.get_tool(tool_id, exact=True)
                 panel_has_tool = self.toolbox.panel_has_tool(tool, self.panel_view_id)
