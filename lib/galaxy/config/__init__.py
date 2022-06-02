@@ -1196,6 +1196,8 @@ class GalaxyAppConfiguration(BaseAppConfiguration, CommonConfigurationMixin):
             self.user_library_import_dir,
         ]
         for path in paths_to_check:
+            log.debug('####### Checking that the following directory exists')
+            log.debug(f'{path=}')
             self._ensure_directory(path)
         # Check that required files exist
         tool_configs = self.tool_configs
