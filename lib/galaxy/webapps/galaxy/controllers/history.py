@@ -110,9 +110,9 @@ class HistoryListGrid(grids.Grid):
             grid_name="HistoryListGrid",
         ),
         grids.SharingStatusColumn(
-            "Sharing", key="sharing", filterable="advanced", sortable=False, use_shared_with_count=True
+            "Sharing", key="sharing", filterable="advanced", sortable=True, use_shared_with_count=True
         ),
-        grids.GridColumn("Size on Disk", key="disk_size", sortable=False, delayed=True),
+        grids.GridColumn("Size on Disk", key="disk_size", sortable=True, delayed=True),
         grids.GridColumn("Created", key="create_time", format=time_ago),
         grids.GridColumn("Last Updated", key="update_time", format=time_ago),
         DeletedColumn("Status", key="deleted", filterable="advanced"),
