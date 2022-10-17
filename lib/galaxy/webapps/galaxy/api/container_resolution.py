@@ -35,6 +35,8 @@ class ContainerResolutionAPIController(BaseGalaxyAPIController):
         """
         GET /api/container_resolvers/<id>
         """
+        print("Hello Cat")
+        print(id)
         return self._view.show(id)
 
     @expose_api
