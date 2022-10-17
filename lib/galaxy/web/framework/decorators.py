@@ -110,6 +110,9 @@ def require_admin(func):
                 return __api_error_dict(trans, status_code=403, err_code=error_codes.ADMIN_REQUIRED, err_msg=msg)
             else:
                 return trans.show_error_message(msg)
+        print("hello")
+        print(*args)
+        print(**kwargs)
         return func(self, trans, *args, **kwargs)
 
     return decorator
