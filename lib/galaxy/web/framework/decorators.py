@@ -111,8 +111,8 @@ def require_admin(func):
             else:
                 return trans.show_error_message(msg)
         print("hello")
-        print(*args)
-        print(**kwargs)
+        print(str(*args))
+        print(str(**kwargs))
         return func(self, trans, *args, **kwargs)
 
     return decorator
