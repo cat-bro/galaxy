@@ -31,13 +31,13 @@ class ContainerResolutionAPIController(BaseGalaxyAPIController):
 
     @expose_api
     @require_admin
-    def show(self, trans, id):
+    def show(self, trans, **kwd):
         """
         GET /api/container_resolvers/<id>
         """
         print("Hello Cat")
         print(id)
-        return self._view.show(id)
+        return self._view.show(kwd.get('index'))
 
     @expose_api
     @require_admin
