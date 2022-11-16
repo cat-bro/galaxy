@@ -27,6 +27,8 @@ def clone_repository(repository_clone_url: str, repository_file_dir: str, ctx_re
     if not os.path.exists(repository_file_dir):
         os.makedirs(repository_file_dir)
     try:
+        log.info('HELLO CAT')
+        log.info(str(cmd))
         subprocess.check_output(cmd, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
         return True, None
     except Exception as e:
